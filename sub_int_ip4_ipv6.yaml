@@ -1,0 +1,43 @@
+- hosts: all
+  connection: httpapi
+  tasks:
+    - name: Get Ethernet1/1 Interface
+      ftd_configuration:
+        operation: getPhysicalInterfaceList
+        filters:
+          hardwareName: Ethernet1/1
+        register_as: interface0
+
+    - name: Setup SubInterface under Ethernet1/1
+      ftd_configuration:
+        operation: upsertSubInterface
+        data:
+          name: outside_subinterface
+          hardwareName: Ethernet1/1.1
+          subIntfId: 1
+          ipv4:
+            addressNull: False
+            defaultRouteUsingDHCP: False
+            dhcp: False
+            ipAddress:
+              ipAddress: 30.09.1.1
+              netmask: 255.255.255.0
+              standbyIpAddress: 30.09.1.2
+              type: haipv4address
+            ipType: STATIC
+            type: interfaceipv4
+          ipv6:
+            enabled: True
+            ipAddress:
+              ipAddress: 30:09:1:1::1
+              netmask: 64
+              standbyIpAddress: 30:09:1:1::2
+              type: haipv6address
+            type: interfaceipv6
+          enabled: True
+          vlanId: 3009
+          monitorInterface: True
+          mtu: 1500
+          type: subinterface
+        path_params:
+          parentId: "{{ interface0[0].id }}"
