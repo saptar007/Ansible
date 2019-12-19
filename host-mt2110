@@ -1,0 +1,2 @@
+[2110]
+mt-2110-3 ansible_host=192.168.0.163 ansible_httpapi_port=443 ansible_network_os=ftd ansible_user=admin ansible_password=Admin123! ansible_httpapi_use_ssl=True ansible_httpapi_ftd_token_path=/api/fdm/v3/fdm/token ansible_httpapi_validate_certs=False
