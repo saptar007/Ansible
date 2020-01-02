@@ -28,11 +28,13 @@
             type: interfaceipv4
           ipv6:
             enabled: True
-            ipAddress:
+            ipAddresses:
               ipAddress: 30:09:1:1::1
-              netmask: 64
               standbyIpAddress: 30:09:1:1::2
               type: haipv6address
+            prefixes:
+              prefix: 64
+              type: ipv6prefix
             type: interfaceipv6
           enabled: True
           vlanId: 3009
