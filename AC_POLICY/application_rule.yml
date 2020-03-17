@@ -84,3 +84,55 @@
           type: accessrule
         path_params:
           parentId: default
+          
+    - name: Find a bank application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: bank
+        register_as: bank_app_results
+        
+    - name: Find a hdfc application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: hdfc
+        register_as: hdfc_app_results
+
+    - name: Find a icici application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: icici
+        register_as: icici_app_results
+        
+    - name: Find a sberbank application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: sberbank
+        register_as: sberbank_app_results
+        
+    - name: Create an access rule allowing traffic from bank
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: Allow traffic from bank and Movies
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+          embeddedAppFilter:
+            applications:
+              - id: "{{ bank_app_results[0].id }}"
+                type: "{{ bank_app_results[0].type }}"
+              - id: "{{ hdfc_app_results[0].id }}"
+                type: "{{ hdfc_app_results[0].type }}"
+              - id: "{{ icici_app_results[0].id }}"
+                type: "{{ icici_app_results[0].type }}"
+              - id: "{{ sberbank_app_results[0].id }}"
+                type: "{{ sberbank_app_results[0].type }}"                
+            applicationFilters: []
+            conditions: []
+            type: embeddedappfilter
+          type: accessrule
+        path_params:
+          parentId: default
