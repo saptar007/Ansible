@@ -34,7 +34,7 @@
           type: accessrule
         path_params:
           parentId: default
-  tasks:
+          
     - name: Find a 050plus application
       ftd_configuration:
         operation: getApplicationList
@@ -42,13 +42,7 @@
           name: 050plus
         register_as: plus_app_results
 
-    - name: Find a Movies application
-      ftd_configuration:
-        operation: getApplicationList
-        filters:
-          name: Movies
-        register_as: movies_app_results
-    - name: Create an access rule allowing traffic from 050plus and Movies
+    - name: Create an access rule allowing traffic from 050plus
       ftd_configuration:
         operation: upsertAccessRule
         data:
@@ -57,10 +51,33 @@
           eventLogAction: LOG_BOTH
           embeddedAppFilter:
             applications:
-              - id: "{{ movies_app_results[0].id }}"
-                type: "{{ movies_app_results[0].type }}"
               - id: "{{ plus_app_results[0].id }}"
                 type: "{{ plus_app_results[0].type }}"
+            applicationFilters: []
+            conditions: []
+            type: embeddedappfilter
+          type: accessrule
+        path_params:
+          parentId: default
+          
+    - name: Find a Amazon application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: Amazon
+        register_as: amazon_app_results
+
+    - name: Create an access rule allowing traffic from Amazon
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: Allow traffic from Amazon and Movies
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+          embeddedAppFilter:
+            applications:
+              - id: "{{ amazon_app_results[0].id }}"
+                type: "{{ amazon_app_results[0].type }}"
             applicationFilters: []
             conditions: []
             type: embeddedappfilter
