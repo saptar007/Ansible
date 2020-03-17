@@ -89,28 +89,28 @@
       ftd_configuration:
         operation: getApplicationList
         filters:
-          name: bank
+          name: Bank of America
         register_as: bank_app_results
         
     - name: Find a hdfc application
       ftd_configuration:
         operation: getApplicationList
         filters:
-          name: hdfc
+          name: HDFC Bank
         register_as: hdfc_app_results
 
     - name: Find a icici application
       ftd_configuration:
         operation: getApplicationList
         filters:
-          name: icici
+          name: ICICI Bank
         register_as: icici_app_results
         
     - name: Find a sberbank application
       ftd_configuration:
         operation: getApplicationList
         filters:
-          name: sberbank
+          name: Sberbank of Russia
         register_as: sberbank_app_results
         
     - name: Create an access rule allowing traffic from bank
