@@ -1,0 +1,69 @@
+ hosts: all
+  connection: httpapi
+  tasks:
+    - name: Find a Google application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: Google
+        register_as: google_app_results
+
+    - name: Find a Dropbox application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: Dropbox
+        register_as: dropbox_app_results
+
+    - name: Create an access rule allowing traffic from google and dropbox cloud file storages
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: Allow traffic from cloud file storages
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+          embeddedAppFilter:
+            applications:
+              - id: "{{ dropbox_app_results[0].id }}"
+                type: "{{ dropbox_app_results[0].type }}"
+              - id: "{{ google_app_results[0].id }}"
+                type: "{{ google_app_results[0].type }}"
+            applicationFilters: []
+            conditions: []
+            type: embeddedappfilter
+          type: accessrule
+        path_params:
+          parentId: default
+  tasks:
+    - name: Find a 050plus application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: 050plus
+        register_as: plus_app_results
+
+    - name: Find a Movies application
+      ftd_configuration:
+        operation: getApplicationList
+        filters:
+          name: Movies
+        register_as: movies_app_results
+    - name: Create an access rule allowing traffic from 050plus and Movies
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: Allow traffic from 050plus and Movies
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+          embeddedAppFilter:
+            applications:
+              - id: "{{ movies_app_results[0].id }}"
+                type: "{{ movies_app_results[0].type }}"
+              - id: "{{ plus_app_results[0].id }}"
+                type: "{{ plus_app_results[0].type }}"
+            applicationFilters: []
+            conditions: []
+            type: embeddedappfilter
+          type: accessrule
+        path_params:
+          parentId: default
