@@ -78,6 +78,10 @@
             applications:
               - id: "{{ amazon_app_results[0].id }}"
                 type: "{{ amazon_app_results[0].type }}"
+              - id: "{{ amazon_app_results[1].id }}"
+                type: "{{ amazon_app_results[1].type }}"
+              - id: "{{ amazon_app_results[2].id }}"
+                type: "{{ amazon_app_results[2].type }}"                
             applicationFilters: []
             conditions: []
             type: embeddedappfilter
