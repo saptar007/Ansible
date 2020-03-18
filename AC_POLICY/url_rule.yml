@@ -18,6 +18,8 @@
     - name: Find an URL category
       ftd_configuration:
         operation: getURLCategoryList
+        query_params:
+          limit: 100
         register_as: category_results
 
     - name: Find a high risk URL reputation
@@ -31,13 +33,64 @@
       ftd_configuration:
         operation: upsertAccessRule
         data:
-          name: Block traffic from alcohol URLs with high risks
+          name: Block traffic from URLs with high risks
           ruleAction: DENY
           eventLogAction: LOG_NONE
           urlFilter:
             urlCategories:
               - type: urlcategorymatcher
                 urlCategory: "{{ category_results[0] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[1] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[2] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[3] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[4] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[5] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[6] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[7] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[8] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[9] }}"
+                urlReputation: "{{ reputation_results[0] }}"
+            urlObjects: []
+            type: embeddedurlfilter
+          type: accessrule
+        path_params:
+          parentId: default
+    - name: Find a suspicious risk URL reputation
+      ftd_configuration:
+        operation: getURLReputationList
+        filters:
+          startPercentage: 2
+        register_as: suspicious_reputation_results
+
+    - name: Create an access rule blocking suscpicious traffic
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: Block traffic from suscpicious URLs 
+          ruleAction: DENY
+          eventLogAction: LOG_NONE
+          urlFilter:
+            urlCategories:
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[9] }}"
                 urlReputation: "{{ reputation_results[0] }}"
             urlObjects: []
             type: embeddedurlfilter
