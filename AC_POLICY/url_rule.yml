@@ -77,7 +77,7 @@
       ftd_configuration:
         operation: getURLReputationList
         filters:
-          startPercentage: 2
+          name: "Suspicious sites"
         register_as: suspicious_reputation_results
 
     - name: Create an access rule blocking suscpicious traffic
@@ -90,8 +90,35 @@
           urlFilter:
             urlCategories:
               - type: urlcategorymatcher
-                urlCategory: "{{ category_results[9] }}"
-                urlReputation: "{{ reputation_results[0] }}"
+                urlCategory: "{{ category_results[10] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[11] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[12] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[13] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[14] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[15] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[16] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[17] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[18] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[19] }}"
+                urlReputation: "{{ suscpicious_reputation_results[0] }}"
             urlObjects: []
             type: embeddedurlfilter
           type: accessrule
