@@ -3,9 +3,9 @@
   tasks:
     - name: Setup Outside Interface with static IP
       ftd_configuration:
-        operation: upsertPhysicalInterface
+        operation: editPhysicalInterface
         data:
-          name: outside
+          name: Internet
           hardwareName: Ethernet1/4
           monitorInterface: True
           ipv4:
@@ -15,7 +15,7 @@
             ipAddress:
               ipAddress: 10.10.20.204
               netmask: 255.255.255.0
-              standbyIpAddress: 10.10.20.1
+              standbyIpAddress: 10.10.20.205
               type: haipv4address
             ipType: STATIC
             type: interfaceipv4
@@ -24,4 +24,4 @@
           mode: ROUTED
           type: physicalinterface
         filters:
-          hardwareName: Ethernet0/4
+          hardwareName: Ethernet1/4
