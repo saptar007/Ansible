@@ -66,7 +66,7 @@
       ftd_configuration:
         operation: upsertAccessRule
         data:
-          name: intrusion and File rule
+          name: BalSecCon and Blk Office and other malware rule
           ruleAction: PERMIT
           filePolicy: "{{ file_policies[2] }}"
           intrusionPolicy:
