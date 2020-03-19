@@ -84,12 +84,19 @@
         path_params:
           parentId: "{{ interface0[0].id }}"
 
-    - name: Setup 3rd SubInterface under Ethernet1/1
+    - name: Get Ethernet1/2 Interface
+      ftd_configuration:
+        operation: getPhysicalInterfaceList
+        filters:
+          hardwareName: Ethernet1/2
+        register_as: interface1
+
+    - name: Setup 1st SubInterface under Ethernet1/2
       ftd_configuration:
         operation: upsertSubInterface
         data:
-          name: eth1_1_3011
-          hardwareName: Ethernet1/1.3011
+          name: eth1_2_3011
+          hardwareName: Ethernet1/2.3011
           subIntfId: 3011
           ipv4:
             addressNull: False
@@ -120,14 +127,14 @@
           mtu: 1500
           type: subinterface
         path_params:
-          parentId: "{{ interface0[0].id }}"
+          parentId: "{{ interface1[0].id }}"
 
-    - name: Setup 4th SubInterface under Ethernet1/1
+    - name: Setup 2nd SubInterface under Ethernet1/2
       ftd_configuration:
         operation: upsertSubInterface
         data:
-          name: eth1_1_3012
-          hardwareName: Ethernet1/1.3012
+          name: eth1_2_3012
+          hardwareName: Ethernet1/2.3012
           subIntfId: 3012
           ipv4:
             addressNull: False
@@ -158,8 +165,7 @@
           mtu: 1500
           type: subinterface
         path_params:
-          parentId: "{{ interface0[0].id }}"
-
+          parentId: "{{ interface1[0].id }}"
 
 
 
