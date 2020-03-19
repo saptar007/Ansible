@@ -1,0 +1,27 @@
+- hosts: all
+  connection: httpapi
+  tasks:
+    - name: Setup Outside Interface with static IP
+      ftd_configuration:
+        operation: upsertPhysicalInterface
+        data:
+          name: outside
+          hardwareName: Ethernet1/4
+          monitorInterface: True
+          ipv4:
+            addressNull: False
+            defaultRouteUsingDHCP: False
+            dhcp: False
+            ipAddress:
+              ipAddress: 10.10.20.204
+              netmask: 255.255.255.0
+              standbyIpAddress: 10.10.20.1
+              type: haipv4address
+            ipType: STATIC
+            type: interfaceipv4
+          mtu: 1500
+          enabled: True
+          mode: ROUTED
+          type: physicalinterface
+        filters:
+          hardwareName: Ethernet0/4
