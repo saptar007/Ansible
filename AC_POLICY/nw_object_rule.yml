@@ -1,6 +1,3 @@
-- hosts: all
-  connection: httpapi
-  tasks:    
     - name: Create an FQDN network for Cisco DevNet
       ftd_configuration:
         operation: upsertNetworkObject
@@ -18,7 +15,7 @@
           name: AllowCiscoTraffic0
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork0 }'
+            - '{{ networkobject_ciscodevnetnetwork0 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -40,7 +37,7 @@
           name: AllowCiscoTraffic1
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork1 }'
+            - '{{ networkobject_ciscodevnetnetwork1 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -62,7 +59,7 @@
           name: AllowCiscoTraffic2
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork2 }'
+            - '{{ networkobject_ciscodevnetnetwork2 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -84,7 +81,7 @@
           name: AllowCiscoTraffic3
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork3 }'
+            - '{{ networkobject_ciscodevnetnetwork3 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -106,7 +103,7 @@
           name: AllowCiscoTraffic4
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork4 }'
+            - '{{ networkobject_ciscodevnetnetwork4 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -128,7 +125,7 @@
           name: AllowCiscoTraffic5
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork5 }'
+            - '{{ networkobject_ciscodevnetnetwork5 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -150,7 +147,7 @@
           name: AllowCiscoTraffic6
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork6 }'
+            - '{{ networkobject_ciscodevnetnetwork6 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -172,7 +169,7 @@
           name: AllowCiscoTraffic7
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork7 }'
+            - '{{ networkobject_ciscodevnetnetwork7 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -194,7 +191,7 @@
           name: AllowCiscoTraffic8
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork8 }'
+            - '{{ networkobject_ciscodevnetnetwork8 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
@@ -216,8 +213,9 @@
           name: AllowCiscoTraffic9
           type: accessrule
           sourceNetworks:
-            - '{ networkobject_ciscodevnetnetwork9 }'
+            - '{{ networkobject_ciscodevnetnetwork9 }}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
           parentId: default
+
