@@ -35,7 +35,7 @@
         data:
           name: Block traffic from URLs with high risks
           ruleAction: DENY
-          eventLogAction: LOG_NONE
+          eventLogAction: LOG_BOTH
           urlFilter:
             urlCategories:
               - type: urlcategorymatcher
@@ -86,7 +86,7 @@
         data:
           name: Block traffic from suscpicious URLs 
           ruleAction: DENY
-          eventLogAction: LOG_NONE
+          eventLogAction: LOG_BOTH
           urlFilter:
             urlCategories:
               - type: urlcategorymatcher
@@ -124,3 +124,106 @@
           type: accessrule
         path_params:
           parentId: default
+    - name: Find a benign risk URL reputation
+      ftd_configuration:
+        operation: getURLReputationList
+        filters:
+          name: "Benign sites with security risks"
+        register_as: benign_reputation_results
+
+    - name: Create an access rule allowing benign traffic
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: Allow traffic from benign URLs with security risks
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+          urlFilter:
+            urlCategories:
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[20] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[21] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[22] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[23] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[24] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[25] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[26] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[27] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[28] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[29] }}"
+                urlReputation: "{{ benign_reputation_results[0] }}"
+            urlObjects: []
+            type: embeddedurlfilter
+          type: accessrule
+        path_params:
+          parentId: default
+          
+    - name: Find a benign and safe URL reputation
+      ftd_configuration:
+        operation: getURLReputationList
+        filters:
+          name: "Benign sites"
+        register_as: benign_safe_reputation_results
+
+    - name: Create an access rule allowing benign traffic
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: Allow traffic from benign URLs
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+          urlFilter:
+            urlCategories:
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[30] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[31] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[32] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[33] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[34] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[35] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[36] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[37] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[38] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+              - type: urlcategorymatcher
+                urlCategory: "{{ category_results[39] }}"
+                urlReputation: "{{ benign_safe_reputation_results[0] }}"
+            urlObjects: []
+            type: embeddedurlfilter
+          type: accessrule
+        path_params:
+          parentId: default          
