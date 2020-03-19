@@ -1,0 +1,223 @@
+- hosts: all
+  connection: httpapi
+  tasks:    
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork0
+          subType: FQDN
+          value: developer0.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet0
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic0
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork0 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork1
+          subType: FQDN
+          value: developer1.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet1
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic1
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork1 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork2
+          subType: FQDN
+          value: developer2.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet2
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic2
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork2 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork3
+          subType: FQDN
+          value: developer3.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet3
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic3
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork3 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork4
+          subType: FQDN
+          value: developer4.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet4
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic4
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork4 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork5
+          subType: FQDN
+          value: developer5.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet5
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic5
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork5 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork6
+          subType: FQDN
+          value: developer6.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet6
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic6
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork6 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork7
+          subType: FQDN
+          value: developer7.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet7
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic7
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork7 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork8
+          subType: FQDN
+          value: developer8.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet8
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic8
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork8 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
+    - name: Create an FQDN network for Cisco DevNet
+      ftd_configuration:
+        operation: upsertNetworkObject
+        data:
+          name: CiscoDevNetNetwork9
+          subType: FQDN
+          value: developer9.cisco.com
+          type: networkobject
+          dnsResolution: IPV4_AND_IPV6
+
+    - name: Create an access rule allowing trafic from Cisco DevNet9
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: AllowCiscoTraffic9
+          type: accessrule
+          sourceNetworks:
+            - '{ networkobject_ciscodevnetnetwork9 }'
+          ruleAction: PERMIT
+          eventLogAction: LOG_BOTH
+        path_params:
+          parentId: default
