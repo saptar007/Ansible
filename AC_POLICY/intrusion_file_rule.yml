@@ -38,7 +38,7 @@
       ftd_configuration:
         operation: upsertAccessRule
         data:
-          name: Intrusion and file policy rule
+          name: max detection and block malware rule
           ruleAction: PERMIT
           filePolicy: "{{ file_policies[0] }}"
           intrusionPolicy:
@@ -47,3 +47,45 @@
           type: accessrule
         path_params:
           parentId: default
+
+    - name: Create an access rule with intrusion and file policies
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: ConnOverSec and Blk Office PDF and other malware rule
+          ruleAction: PERMIT
+          filePolicy: "{{ file_policies[1] }}"
+          intrusionPolicy:
+            id: "{{ intrusion_policies[1].id }}"
+            type: "{{ intrusion_policies[1].type }}"
+          type: accessrule
+        path_params:
+          parentId: default
+
+    - name: Create an access rule with intrusion and file policies
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: intrusion and File rule
+          ruleAction: PERMIT
+          filePolicy: "{{ file_policies[2] }}"
+          intrusionPolicy:
+            id: "{{ intrusion_policies[2].id }}"
+            type: "{{ intrusion_policies[2].type }}"
+          type: accessrule
+        path_params:
+          parentId: default  
+          
+    - name: Create an access rule with intrusion and file policies
+      ftd_configuration:
+        operation: upsertAccessRule
+        data:
+          name: SecOverConn and Cloud Lookup rule
+          ruleAction: PERMIT
+          filePolicy: "{{ file_policies[3] }}"
+          intrusionPolicy:
+            id: "{{ intrusion_policies[3].id }}"
+            type: "{{ intrusion_policies[3].type }}"
+          type: accessrule
+        path_params:
+          parentId: default          
