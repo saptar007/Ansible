@@ -27,19 +27,19 @@
           statefulFailoverName: stateful-failover-link
           primaryFailoverIPv4:
             netmask: "24"
-            ipAddress: 192.168.10.1
+            ipAddress: 99.99.99.99
             type: ipv4address
           secondaryFailoverIPv4:
             netmask: "24"
-            ipAddress: 192.168.10.2
+            ipAddress: 99.99.99.100
             type: ipv4address
           primaryStatefulFailoverIPv4:
             netmask: "24"
-            ipAddress: 192.168.10.1
+            ipAddress: 99.99.100.99
             type: ipv4address
           secondaryStatefulFailoverIPv4:
             netmask: "24"
-            ipAddress: 192.168.10.2
+            ipAddress: 99.99.100.100
             type: ipv4address
           failoverInterface: "{{ failover_interfaces[0] }}"
           statefulFailoverInterface: "{{ stateful_failover_interfaces[0] }}"
