@@ -1,0 +1,67 @@
+- hosts: all
+  connection: httpapi
+  tasks:
+    - name: Find a default CA certificate
+      ftd_configuration:
+        operation: getInternalCACertificateList
+        filters:
+          name: NGFW-Default-InternalCA
+        register_as: certificates
+
+    - name: Setup an SSL policy
+      ftd_configuration:
+        operation: upsertSSLPolicy
+        data:
+          name: NGFW-Default-SSL-Policy
+          defaultAction:
+            policyAction: DO_NOT_DECRYPT
+            eventLogAction: LOG_NONE
+            syslogServer: null
+            type: sslpolicydefaultaction
+          decryptionCACertificate: "{{ certificates[0] }}"
+          undecryptableActions:
+            compressedSession: INHERIT_DEFAULT_ACTION
+            decryptionErrors: BLOCK
+            handShakeErrors: INHERIT_DEFAULT_ACTION
+            sessionNotCached: INHERIT_DEFAULT_ACTION
+            sslV2Session: INHERIT_DEFAULT_ACTION
+            type: sslundecryptableactions
+            unknownCipherSuite: INHERIT_DEFAULT_ACTION
+            unsupportedCipherSuite: INHERIT_DEFAULT_ACTION
+          type: sslpolicy
+        register_as: ssl_policy
+
+    - name: Find an intrustion policy
+      ftd_configuration:
+        operation: getIntrusionPolicyList
+        register_as: intrusion_policies
+
+    - name: Setup a syslog server
+      ftd_configuration:
+        operation: upsertSyslogServer
+        data:
+          name: 10.10.50.5:514
+          useManagementInterface: True
+          protocol: UDP
+          host: 10.10.50.5
+          port: "514"
+          type: syslogserver
+        filters:
+          host: 10.10.50.5
+        register_as: syslog_server
+
+    - name: Enable the SSL policy as a part of access policy
+      ftd_configuration:
+        operation: upsertAccessPolicy
+        data:
+          name: NGFW-Access-Policy
+          defaultAction:
+            action: PERMIT
+            eventLogAction: LOG_BOTH
+            syslogServer: "{{ syslog_server }}"
+            intrusionPolicy:
+              id: "{{ intrusion_policies[0].id }}"
+              type: "{{ intrusion_policies[0].type }}"
+            type: accessdefaultaction
+          sslPolicy: "{{ ssl_policy }}"
+          type: accesspolicy
