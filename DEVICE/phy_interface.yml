@@ -1,27 +1,29 @@
 - hosts: mt-2110-3
   connection: httpapi
   tasks:
-    - name: Setup Outside Interface with static IP
-      ftd_configuration:
-        operation: editPhysicalInterface
-        data:
-          name: Internet
-          hardwareName: Ethernet1/4
-          monitorInterface: True
-          ipv4:
-            addressNull: False
-            defaultRouteUsingDHCP: False
-            dhcp: False
-            ipAddress:
-              ipAddress: 10.10.20.204
-              netmask: 255.255.255.0
-              standbyIpAddress: 10.10.20.205
-              type: haipv4address
-            ipType: STATIC
-            type: interfaceipv4
-          mtu: 1500
-          enabled: True
-          mode: ROUTED
-          type: physicalinterface
-        filters:
-          hardwareName: Ethernet1/4
+  - name: Setup Inside Interface with static IP
+    ftd_configuration:
+      operation: upsertPhysicalInterface
+      data:
+        name: internet
+        hardwareName: Ethernet1/4
+        monitorInterface: true
+        duplexType: FULL
+        ipv4:
+          addressNull: false
+          defaultRouteUsingDHCP: false
+          dhcp: false
+          ipAddress:
+            ipAddress: 192.168.20.2
+            netmask: 255.255.255.0
+            standbyIpAddress: 192.168.20.3
+            type: haipv4address
+          ipType: STATIC
+          type: interfaceipv4
+        mtu: 1500
+        enabled: true
+        mode: ROUTED
+        type: physicalinterface
+      filters:
+        hardwareName: Ethernet1/4
+
