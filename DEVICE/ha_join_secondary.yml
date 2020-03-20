@@ -1,0 +1,50 @@
+- hosts: mt-2110-4
+  gather_facts: no
+  connection: httpapi
+  tasks:
+    - name: Get failover interface
+      ftd_configuration:
+        operation: getPhysicalInterfaceList
+        filters:
+          hardwareName: Ethernet1/6
+        register_as: failover_interfaces
+        
+    - name: Get failover interface
+      ftd_configuration:
+        operation: getPhysicalInterfaceList
+        filters:
+          hardwareName: Ethernet1/5
+        register_as: stateful_failover_interfaces
+        
+    - name: Update HA configuration
+      ftd_configuration:
+        operation: upsertHAConfiguration
+        data:
+          name: HA
+          type: haconfiguration
+          nodeRole: HA_SECONDARY
+          failoverName: failover-link
+          statefulFailoverName: stateful-failover-link
+          primaryFailoverIPv4:
+            netmask: "24"
+            ipAddress: 192.168.10.1
+            type: ipv4address
+          secondaryFailoverIPv4:
+            netmask: "24"
+            ipAddress: 192.168.10.2
+            type: ipv4address
+          primaryStatefulFailoverIPv4:
+            netmask: "24"
+            ipAddress: 192.168.10.1
+            type: ipv4address
+          secondaryStatefulFailoverIPv4:
+            netmask: "24"
+            ipAddress: 192.168.10.2
+            type: ipv4address
+          failoverInterface: "{{ failover_interfaces[0] }}"
+          statefulFailoverInterface: "{{ stateful_failover_interfaces[0] }}"
+
+    - name: Start HA join
+      ftd_configuration:
+        operation: addJoinHAStatus
+        register_as: ha_job
