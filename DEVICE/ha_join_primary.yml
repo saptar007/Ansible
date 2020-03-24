@@ -77,7 +77,7 @@
         data:
           name: HA
           type: haconfiguration
-          nodeRole: HA_SECONDARY
+          nodeRole: HA_PRIMARY
           failoverName: failover-link
           statefulFailoverName: stateful-failover-link
           primaryFailoverIPv4:
