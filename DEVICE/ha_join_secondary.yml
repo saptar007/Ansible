@@ -2,20 +2,75 @@
   gather_facts: no
   connection: httpapi
   tasks:
+    - name: Setup Inside Interface with static IP to remove any existing DHCP config
+      ftd_configuration:
+        operation: upsertPhysicalInterface
+        data:
+          name: outside
+          hardwareName: Ethernet1/1
+          monitorInterface: true
+          duplexType: FULL
+          ipv4:
+            addressNull: false
+            defaultRouteUsingDHCP: false
+            dhcp: false
+            ipAddress:
+              ipAddress: 172.16.0.1
+              netmask: 255.255.255.0
+              standbyIpAddress: 172.16.0.2
+              type: haipv4address
+            ipType: STATIC
+            type: interfaceipv4
+          mtu: 1500
+          enabled: true
+          mode: ROUTED
+          type: physicalinterface
+        filters:
+          hardwareName: Ethernet1/1
+
+    - name: Fetch pending changes
+      ftd_configuration:
+        operation: getBaseEntityDiffList
+        register_as: pending_changes
+
+    - name: Complete playbook when nothing to deploy
+      meta: end_play
+      when: pending_changes | length == 0
+
+    - name: Start deployment
+      ftd_configuration:
+        operation: addDeployment
+        register_as: deployment_job
+
+    - name: Poll deployment status until the job is finished
+      ftd_configuration:
+        operation: getDeployment
+        path_params:
+          objId: '{{ deployment_job.id }}'
+        register_as: deployment_status
+      until: deployment_status.endTime != -1
+      retries: 100
+      delay: 3
+
+    - name: Stop the playbook if the deployment failed
+      fail:
+        msg: 'Deployment failed. Status: {{ deployment_status.statusMessages }}'
+      when: deployment_status.state != 'DEPLOYED'
+
     - name: Get failover interface
       ftd_configuration:
         operation: getPhysicalInterfaceList
         filters:
           hardwareName: Ethernet1/6
         register_as: failover_interfaces
-        
-    - name: Get failover interface
+
+    - name: Get Stateful failover interface
       ftd_configuration:
         operation: getPhysicalInterfaceList
         filters:
           hardwareName: Ethernet1/5
         register_as: stateful_failover_interfaces
-        
+
     - name: Update HA configuration
       ftd_configuration:
         operation: upsertHAConfiguration
@@ -48,3 +103,19 @@
       ftd_configuration:
         operation: addJoinHAStatus
         register_as: ha_job
+
+    - name: Poll HA status until the job is finished
+      ftd_configuration:
+        operation: getJoinHAStatus
+        path_params:
+          objId: '{{ ha_job.id }}'
+        register_as: ha_status
+      until: ha_status.endTime != -1
+      retries: 100
+      delay: 3
+
+    - name: Stop the playbook if the HA Join failed
+      fail:
+        msg: 'HA Join failed. Status: {{ deployment_status.statusMessages }}'
+      when: ha_status.state != 'DEPLOYED'
+
