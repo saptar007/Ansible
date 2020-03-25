@@ -1,0 +1,14 @@
+- hosts: all
+  connection: httpapi
+  tasks:
+        - name: Execute 'startHASuspend' operation
+          ftd_configuration:
+            operation: startHASuspend
+            data:
+                type: hastatus
+			register_as: hasuspend
+        - name: Execute 'getHAStatus' operation
+          ftd_configuration:
+            operation: "getHAStatus"
+            path_params:
+                objId: "{{ hasuspend.id }}"
