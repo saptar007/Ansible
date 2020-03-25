@@ -1,0 +1,21 @@
+- hosts: mt-2110-3
+  connection: httpapi
+  tasks:
+    - name: Execute sru update operation
+      ftd_configuration:
+        operation: upsertSRUUpdateImmediate
+        data:
+                #scheduleType: IMMEDIATE
+                name: 2020-03-23-001
+                type: sruupdateimmediate
+        register_as: sruupdate_job
+
+    - name: Poll deployment status until the job is finished
+      ftd_configuration:
+        operation: getSRUUpdateImmediate
+        path_params:
+          objId: '{{ sruupdate_job.id }}'
+        register_as: sruupdate_status
+      until: sruupdate_status.endTime != -1
+      retries: 1000
+      delay: 3
