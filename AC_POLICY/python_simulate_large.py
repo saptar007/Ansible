@@ -1,4 +1,5 @@
-for i in range (0,10):
+
+for i in range (0,1):
   s = f"""    - name: Create an FQDN network for Cisco DevNet
       ftd_configuration:
         operation: upsertNetworkObject
@@ -8,7 +9,6 @@ for i in range (0,10):
           value: developer{i}.cisco.com
           type: networkobject
           dnsResolution: IPV4_AND_IPV6
-
     - name: Create an access rule allowing trafic from Cisco DevNet{i}
       ftd_configuration:
         operation: upsertAccessRule
@@ -16,9 +16,9 @@ for i in range (0,10):
           name: AllowCiscoTraffic{i}
           type: accessrule
           sourceNetworks:
-            - '{{ networkobject_ciscodevnetnetwork{i} }}'
+            - '{{{{ networkobject_ciscodevnetnetwork{i} }}}}'
           ruleAction: PERMIT
           eventLogAction: LOG_BOTH
         path_params:
           parentId: default"""
-  print (s)	
+  print (s)
